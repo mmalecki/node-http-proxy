@@ -47,9 +47,15 @@ httpProxy.createServer(function (req, res, proxy) {
 // Target Http Server
 //
 http.createServer(function (req, res) {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('request successfully proxied to: ' + req.url + '\n' + JSON.stringify(req.headers, true, 2));
-  res.end();
+  var buffer = [];
+
+  req.on('data', function (chunk) { buffer.push(chunk); });
+  req.on('end', function () {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.write('request successfully proxied to: ' + req.url + '\n' + JSON.stringify(req.headers, true, 2));
+    res.write('\nrequest body is: \n' + JSON.stringify(buffer.join('')));
+    res.end();
+  });
 }).listen(9000);
 
 util.puts('http proxy server '.blue + 'started '.green.bold + 'on port '.blue + '8002 '.yellow + 'with latency'.magenta.underline);
