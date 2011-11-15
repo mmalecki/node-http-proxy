@@ -1,4 +1,4 @@
-# node-http-proxy
+# node-http-proxy [![Build Status](https://secure.travis-ci.org/mmalecki/node-http-proxy.png)](http://travis-ci.org/mmalecki/node-http-proxy)
 
 <img src="http://i.imgur.com/8fTt9.png" />
 
